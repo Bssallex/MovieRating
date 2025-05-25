@@ -11,6 +11,6 @@ public record MovieRating(Long id,
                           String userExperience,
                           BigDecimal rating,
                           LocalDate releaseYear,
-                          LocalDate dateWatched
+                          LocalDate watchedAt
                           ) {
 }
