@@ -20,20 +20,12 @@ public class MovieRatingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
     String movieTitle;
-
     String description;
-
     String genre;
-
     String review;
-
     String userExperience;
-
     BigDecimal rating;
-
     LocalDate releaseYear;
-
-    LocalDate dateWatched;
+    LocalDate watchedAt;
 }
