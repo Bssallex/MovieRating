@@ -1,10 +1,7 @@
 package MovieRating.infrastructure.beans;
 
 import MovieRating.core.gateway.MovieGateway;
-import MovieRating.core.usecases.MovieFindAllImpl;
-import MovieRating.core.usecases.MovieFindAllUseCase;
-import MovieRating.core.usecases.MovieSaveImpl;
-import MovieRating.core.usecases.MovieSaveUseCase;
+import MovieRating.core.usecases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,5 +16,10 @@ public class BeansConfiguration {
     @Bean
     public MovieFindAllUseCase movieFindAllUseCase(MovieGateway gateway){
         return new MovieFindAllImpl(gateway);
+    }
+
+    @Bean
+    public MovieSetByIdUseCase movieSetByIdUseCase(MovieGateway gateway){
+        return new MovieSetByIdImpl(gateway);
     }
 }
