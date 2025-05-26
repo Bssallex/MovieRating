@@ -51,4 +51,14 @@ public class RepositoryGateway implements MovieGateway {
         });
     }
 
+    @Override
+    public Optional<MovieRating> deleteMovieId(Long id) {
+        Optional<MovieRatingEntity> deleteId = repository.findById(id);
+        return deleteId
+                .map(delete -> {
+                    repository.delete(delete);
+                    return mapping.toMovie(delete);
+                });
+    }
+
 }
