@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -29,6 +30,25 @@ public class RepositoryGateway implements MovieGateway {
     public MovieRating saveMovie(MovieRating movieRating) {
         MovieRatingEntity save = repository.save(mapping.toEntity(movieRating));
         return mapping.toMovie(save);
+    }
+
+    @Override
+    public Optional<MovieRating> findMovieById(Long id, MovieRating rating) {
+        Optional<MovieRatingEntity> findId = repository.findById(id);
+        return findId.map(movieId -> {
+            movieId.setMovieTitle(rating.movieTitle());
+            movieId.setDescription(rating.description());
+            movieId.setGenre(rating.genre());
+            movieId.setReview(rating.review());
+            movieId.setUserExperience(rating.userExperience());
+            movieId.setRating(rating.rating());
+            movieId.setReleaseYear(rating.releaseYear());
+            movieId.setWatchedAt(rating.watchedAt());
+
+            repository.save(movieId);
+
+            return mapping.toMovie(movieId);
+        });
     }
 
 }
