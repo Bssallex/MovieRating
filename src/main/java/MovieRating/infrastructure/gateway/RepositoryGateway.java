@@ -20,7 +20,7 @@ public class RepositoryGateway implements MovieGateway {
 
     @Override
     public List<MovieRating> findAllMovies() {
-        List<MovieRatingEntity> findAll = repository.findAll();
+        List<MovieRatingEntity> findAll = repository.findAllByOrderByIdAsc();
         return findAll.stream()
                 .map(mapping::toMovie)
                 .toList();
