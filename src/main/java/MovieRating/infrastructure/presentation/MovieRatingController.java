@@ -6,12 +6,16 @@ import MovieRating.core.usecases.MovieFindAllUseCase;
 import MovieRating.core.usecases.MovieSaveUseCase;
 import MovieRating.core.usecases.MovieSetByIdUseCase;
 import MovieRating.infrastructure.dtos.MovieRatingDto;
+import MovieRating.infrastructure.exceptions.NotFoundExceptions;
 import MovieRating.infrastructure.mapper.MovieRatingMapping;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -26,29 +30,46 @@ public class MovieRatingController {
     private final MovieRatingMapping mapping;
 
     @GetMapping("findmovie")
-    public List<MovieRatingDto> findAllMovie(){
+    public ResponseEntity<Map<String, Object>> findAllMovie(){
         List<MovieRating> findall = movieFindAllUseCase.execute();
-        return findall.stream()
+
+        Map<String, Object> find = new HashMap<>();
+        find.put("message", "List of movies");
+        find.put("data", findall.stream()
                 .map(mapping::toDto)
-                .toList();
+                .toList());
+
+        return ResponseEntity.ok(find);
     }
 
     @PostMapping("moviesave")
-    public MovieRatingDto saveMovie(@RequestBody MovieRatingDto movie){
+    public ResponseEntity<Map<String, Object>> saveMovie(@RequestBody MovieRatingDto movie){
         MovieRating save = movieSaveUseCase.execute(mapping.toMovie(movie));
-        return mapping.toDto(save);
+
+        Map<String, Object> created = new HashMap<>();
+        created.put("message", "Movie created successfully");
+        created.put("data", mapping.toDto(save));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("setmovie/{id}")
-    public Optional<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
-        Optional<MovieRating> setId = movieSetByIdUseCase.execute(id, movieRating);
-        return setId.map(mapping::toDto);
+    public ResponseEntity<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
+        MovieRating setId = movieSetByIdUseCase.execute(id, movieRating)
+                .orElseThrow(() -> new NotFoundExceptions("Attention! No movie was found with this id: " + id));
+
+        return ResponseEntity.ok(mapping.toDto(setId));
     }
 
     @DeleteMapping("deletemovie/{id}")
-    public Optional<MovieRatingDto> deleteMovieId(@PathVariable Long id){
-        Optional<MovieRating> delete = movieDeleteByIdUseCase.execute(id);
-        return delete.map(mapping::toDto);
+    public ResponseEntity<Map<String, String>> deleteMovieId(@PathVariable Long id){
+        movieDeleteByIdUseCase.execute(id)
+                .orElseThrow(() -> new NotFoundExceptions("Attention! No movie was found with this id: " + id));
+
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "Object deleted");
+
+        return ResponseEntity.ok(message);
     }
 
 }
