@@ -22,4 +22,9 @@ public class BeansConfiguration {
     public MovieSetByIdUseCase movieSetByIdUseCase(MovieGateway gateway){
         return new MovieSetByIdImpl(gateway);
     }
+
+    @Bean
+    public MovieDeleteByIdUseCase movieDeleteByIdUseCase(MovieGateway gateway){
+        return new MovieDeleteByIdImpl(gateway);
+    }
 }
