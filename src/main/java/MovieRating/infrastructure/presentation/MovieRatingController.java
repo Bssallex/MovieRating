@@ -3,12 +3,14 @@ package MovieRating.infrastructure.presentation;
 import MovieRating.core.entity.MovieRating;
 import MovieRating.core.usecases.MovieFindAllUseCase;
 import MovieRating.core.usecases.MovieSaveUseCase;
+import MovieRating.core.usecases.MovieSetByIdUseCase;
 import MovieRating.infrastructure.dtos.MovieRatingDto;
 import MovieRating.infrastructure.mapper.MovieRatingMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -17,6 +19,7 @@ public class MovieRatingController {
 
     private final MovieSaveUseCase movieSaveUseCase;
     private final MovieFindAllUseCase movieFindAllUseCase;
+    private final MovieSetByIdUseCase movieSetByIdUseCase;
 
     private final MovieRatingMapping mapping;
 
@@ -32,6 +35,12 @@ public class MovieRatingController {
     public MovieRatingDto saveMovie(@RequestBody MovieRatingDto movie){
         MovieRating save = movieSaveUseCase.execute(mapping.toMovie(movie));
         return mapping.toDto(save);
+    }
+
+    @PutMapping("setmovie/{id}")
+    public Optional<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
+        Optional<MovieRating> setId = movieSetByIdUseCase.execute(id, movieRating);
+        return setId.map(mapping::toDto);
     }
 
 }
