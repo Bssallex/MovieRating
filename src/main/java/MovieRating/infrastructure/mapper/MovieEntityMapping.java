@@ -10,7 +10,7 @@ public class MovieEntityMapping {
     public MovieRatingEntity toEntity(MovieRating movie){
         return new MovieRatingEntity(
                 movie.id(),
-                movie.movieTitle(),
+                movie.movieTitle().toLowerCase(),
                 movie.description(),
                 movie.genre(),
                 movie.review(),
