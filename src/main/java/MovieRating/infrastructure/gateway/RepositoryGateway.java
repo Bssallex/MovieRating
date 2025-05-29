@@ -2,6 +2,7 @@ package MovieRating.infrastructure.gateway;
 
 import MovieRating.core.entity.MovieRating;
 import MovieRating.core.gateway.MovieGateway;
+import MovieRating.infrastructure.exceptions.ExistingMovieExceptions;
 import MovieRating.infrastructure.mapper.MovieEntityMapping;
 import MovieRating.infrastructure.persistence.MovieRatingEntity;
 import MovieRating.infrastructure.persistence.MovieRepository;
@@ -28,9 +29,16 @@ public class RepositoryGateway implements MovieGateway {
 
     @Override
     public MovieRating saveMovie(MovieRating movieRating) {
+        String titleLowerCase = movieRating.movieTitle().toLowerCase();
+
+        if(repository.findByMovieTitle(titleLowerCase).isPresent()){
+            throw new ExistingMovieExceptions("Attention! This movie already exists in the records");
+        }
+
         MovieRatingEntity save = repository.save(mapping.toEntity(movieRating));
         return mapping.toMovie(save);
     }
+
 
     @Override
     public Optional<MovieRating> findMovieById(Long id, MovieRating rating) {
