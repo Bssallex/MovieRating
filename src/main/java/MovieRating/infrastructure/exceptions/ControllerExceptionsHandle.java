@@ -20,5 +20,14 @@ public class ControllerExceptionsHandle {
         return new ResponseEntity<>(exceptions, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(ExistingMovieExceptions.class)
+    public ResponseEntity<Map<String, String>> handleExistingMovie(ExistingMovieExceptions existingMovieExceptions){
+
+        Map<String, String> exceptions = new HashMap<>();
+        exceptions.put("Error: ", existingMovieExceptions.getMessage());
+        exceptions.put("Message: ", "Oops! Try Again");
+        return new ResponseEntity<>(exceptions, HttpStatus.CONFLICT);
+    }
+
 
 }
