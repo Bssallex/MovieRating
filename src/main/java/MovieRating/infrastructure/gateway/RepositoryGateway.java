@@ -28,6 +28,13 @@ public class RepositoryGateway implements MovieGateway {
     }
 
     @Override
+    public Optional<MovieRating> movieByName(MovieRating title) {
+
+        Optional<MovieRatingEntity> movieName = repository.findByMovieTitle(title.movieTitle().toLowerCase());
+        return movieName.map(mapping::toMovie);
+    }
+
+    @Override
     public MovieRating saveMovie(MovieRating movieRating) {
         String titleLowerCase = movieRating.movieTitle().toLowerCase();
 
@@ -68,5 +75,6 @@ public class RepositoryGateway implements MovieGateway {
                     return mapping.toMovie(delete);
                 });
     }
+
 
 }
