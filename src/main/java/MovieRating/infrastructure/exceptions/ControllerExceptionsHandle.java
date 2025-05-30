@@ -16,7 +16,7 @@ public class ControllerExceptionsHandle {
 
         Map<String, String> exceptions = new HashMap<>();
         exceptions.put("Error: ", notFoundExceptions.getMessage());
-        exceptions.put("Message: ", "The request event was not found, check the identifier try again");
+        exceptions.put("Message: ", "O evento de solicitação não foi encontrado, verifique o identificador e tente novamente");
         return new ResponseEntity<>(exceptions, HttpStatus.CONFLICT);
     }
 
@@ -25,7 +25,7 @@ public class ControllerExceptionsHandle {
 
         Map<String, String> exceptions = new HashMap<>();
         exceptions.put("Error: ", existingMovieExceptions.getMessage());
-        exceptions.put("Message: ", "Oops! Try Again");
+        exceptions.put("Message: ", "Oops! Tente novamente");
         return new ResponseEntity<>(exceptions, HttpStatus.CONFLICT);
     }
 

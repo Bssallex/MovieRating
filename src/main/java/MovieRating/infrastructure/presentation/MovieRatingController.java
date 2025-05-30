@@ -33,7 +33,7 @@ public class MovieRatingController {
         List<MovieRating> findall = movieFindAllUseCase.execute();
 
         Map<String, Object> find = new HashMap<>();
-        find.put("message", "List of movies");
+        find.put("message", "Lista de filmes");
         find.put("data", findall.stream()
                 .map(mapping::toDto)
                 .toList());
@@ -47,13 +47,13 @@ public class MovieRatingController {
 
         if (movieTitle.isEmpty()) {
             Map<String, Object> response = new HashMap<>();
-            response.put("message", "Movie not found");
+            response.put("message", "Filme não encontrado");
             response.put("data", List.of());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
         Map<String, Object> find = new HashMap<>();
-        find.put("message", "Movie");
+        find.put("message", "Filme");
         find.put("data", List.of(mapping.toDto(movieTitle.get())));
 
         return ResponseEntity.ok(find);
@@ -65,7 +65,7 @@ public class MovieRatingController {
         MovieRating save = movieSaveUseCase.execute(mapping.toMovie(movie));
 
         Map<String, Object> created = new HashMap<>();
-        created.put("message", "Movie created successfully");
+        created.put("message", "Filme criado");
         created.put("data", mapping.toDto(save));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -74,7 +74,7 @@ public class MovieRatingController {
     @PutMapping("setmovie/{id}")
     public ResponseEntity<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
         MovieRating setId = movieSetByIdUseCase.execute(id, movieRating)
-                .orElseThrow(() -> new NotFoundExceptions("Attention! No movie was found with this id: " + id));
+                .orElseThrow(() -> new NotFoundExceptions("Atenção! Não foi encontrado nenhum filme com esse id: " + id));
 
         return ResponseEntity.ok(mapping.toDto(setId));
     }
@@ -82,10 +82,10 @@ public class MovieRatingController {
     @DeleteMapping("deletemovie/{id}")
     public ResponseEntity<Map<String, String>> deleteMovieId(@PathVariable Long id){
         movieDeleteByIdUseCase.execute(id)
-                .orElseThrow(() -> new NotFoundExceptions("Attention! No movie was found with this id: " + id));
+                .orElseThrow(() -> new NotFoundExceptions("Atenção! Não foi encontrado nenhum filme com esse id: " + id));
 
         Map<String, String> message = new HashMap<>();
-        message.put("message", "Object deleted");
+        message.put("message", "Objeto deletado");
 
         return ResponseEntity.ok(message);
     }

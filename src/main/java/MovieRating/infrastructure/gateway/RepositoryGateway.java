@@ -39,7 +39,7 @@ public class RepositoryGateway implements MovieGateway {
         String titleLowerCase = movieRating.movieTitle().toLowerCase();
 
         if(repository.findByMovieTitle(titleLowerCase).isPresent()){
-            throw new ExistingMovieExceptions("Attention! This movie already exists in the records");
+            throw new ExistingMovieExceptions("Atenção! Esse título já existe nos registros");
         }
 
         MovieRatingEntity save = repository.save(mapping.toEntity(movieRating));
