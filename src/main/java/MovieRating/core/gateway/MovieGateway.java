@@ -11,4 +11,5 @@ public interface MovieGateway{
     List<MovieRating> findAllMovies();
     Optional<MovieRating> findMovieById(Long id, MovieRating rating);
     Optional<MovieRating> deleteMovieId(Long id);
+    Optional<MovieRating> movieByName(MovieRating title);
 }
