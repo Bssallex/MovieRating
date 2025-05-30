@@ -27,4 +27,9 @@ public class BeansConfiguration {
     public MovieDeleteByIdUseCase movieDeleteByIdUseCase(MovieGateway gateway){
         return new MovieDeleteByIdImpl(gateway);
     }
+
+    @Bean
+    public MovieFindByName movieFindByName(MovieGateway gateway){
+        return new MovieFindByNameImpl(gateway);
+    }
 }
