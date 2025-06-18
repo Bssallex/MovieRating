@@ -51,6 +51,7 @@ public class RepositoryGateway implements MovieGateway {
     public Optional<MovieRating> findMovieById(Long id, MovieRating rating) {
         Optional<MovieRatingEntity> findId = repository.findById(id);
         return findId.map(movieId -> {
+            movieId.setId(movieId.getId());
             movieId.setMovieTitle(rating.movieTitle());
             movieId.setDescription(rating.description());
             movieId.setGenre(rating.genre());
