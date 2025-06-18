@@ -16,7 +16,12 @@ public class Oauth2ResourceServer {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.anyRequest().authenticated())
+                        auth.requestMatchers(
+                                "/v3/api-docs/**",
+                                         "/swagger-ui/**",
+                                        "/swagger-ui.html")
+                                .permitAll()
+                                .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter())));
 
