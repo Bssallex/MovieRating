@@ -5,6 +5,9 @@ import MovieRating.core.usecases.*;
 import MovieRating.infrastructure.dtos.MovieRatingDto;
 import MovieRating.infrastructure.exceptions.NotFoundExceptions;
 import MovieRating.infrastructure.mapper.MovieRatingMapping;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,8 @@ public class MovieRatingController {
     private final MovieRatingMapping mapping;
 
     @GetMapping("findmovie")
+    @Operation(summary = "Listar todos os títulos", description = "Usuário recebe o catálogo de todos os filmes existentes")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Requisição bem sucedida")})
     public ResponseEntity<Map<String, Object>> findAllMovie(){
         List<MovieRating> findall = movieFindAllUseCase.execute();
 
@@ -42,6 +47,10 @@ public class MovieRatingController {
     }
 
     @GetMapping("titlemovie")
+    @Operation(summary = "Lista um título", description = "Usuário pode fazer uma pesquisa por um título existente")
+    @ApiResponses(value =
+            {@ApiResponse(responseCode = "200", description = "Requisição bem sucedida"),
+             @ApiResponse(responseCode = "404", description = "Título não encontrado")})
     public ResponseEntity<Map<String, Object>> findMovieTitle(@RequestBody MovieRatingDto dto){
         Optional<MovieRating> movieTitle = movieFindByName.execute(mapping.toMovie(dto));
 
@@ -60,6 +69,8 @@ public class MovieRatingController {
     }
 
     @PostMapping("moviesave")
+    @Operation(summary = "Cria um novo título", description = "Usuário passa todos os atributos e salva no banco de dados")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Título criado")})
     public ResponseEntity<Map<String, Object>> saveMovie(@RequestBody MovieRatingDto movie){
         MovieRating save = movieSaveUseCase.execute(mapping.toMovie(movie));
 
@@ -71,6 +82,11 @@ public class MovieRatingController {
     }
 
     @PutMapping("setmovie/{id}")
+    @Operation(summary = "Altera todos os atributos", description = "Usuário pode alterar todos os dados de um título existente")
+    @ApiResponses(value =
+            {@ApiResponse(responseCode = "200", description = "Requisição bem sucedida"),
+            @ApiResponse(responseCode = "409", description = "Título não encontrado")
+    })
     public ResponseEntity<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
         MovieRating setId = movieSetByIdUseCase.execute(id, movieRating)
                 .orElseThrow(() -> new NotFoundExceptions("Não foi encontrado nenhum filme com esse id: " + id));
@@ -79,6 +95,10 @@ public class MovieRatingController {
     }
 
     @DeleteMapping("deletemovie/{id}")
+    @Operation(summary = "Deleta um título", description = "Usuário pode deletar um título buscando pelo id")
+    @ApiResponses(value =
+            {@ApiResponse(responseCode = "200", description = "Requisição bem sucedida"),
+            @ApiResponse(responseCode = "409", description = "Título não encontrado")})
     public ResponseEntity<Map<String, String>> deleteMovieId(@PathVariable Long id){
         movieDeleteByIdUseCase.execute(id)
                 .orElseThrow(() -> new NotFoundExceptions("Não foi encontrado nenhum filme com esse id: " + id));
