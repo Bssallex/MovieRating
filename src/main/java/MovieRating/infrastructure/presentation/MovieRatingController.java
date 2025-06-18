@@ -57,7 +57,6 @@ public class MovieRatingController {
         find.put("data", List.of(mapping.toDto(movieTitle.get())));
 
         return ResponseEntity.ok(find);
-
     }
 
     @PostMapping("moviesave")
@@ -74,7 +73,7 @@ public class MovieRatingController {
     @PutMapping("setmovie/{id}")
     public ResponseEntity<MovieRatingDto> setMovieId(@PathVariable Long id, @RequestBody MovieRating movieRating){
         MovieRating setId = movieSetByIdUseCase.execute(id, movieRating)
-                .orElseThrow(() -> new NotFoundExceptions("Atenção! Não foi encontrado nenhum filme com esse id: " + id));
+                .orElseThrow(() -> new NotFoundExceptions("Não foi encontrado nenhum filme com esse id: " + id));
 
         return ResponseEntity.ok(mapping.toDto(setId));
     }
@@ -82,7 +81,7 @@ public class MovieRatingController {
     @DeleteMapping("deletemovie/{id}")
     public ResponseEntity<Map<String, String>> deleteMovieId(@PathVariable Long id){
         movieDeleteByIdUseCase.execute(id)
-                .orElseThrow(() -> new NotFoundExceptions("Atenção! Não foi encontrado nenhum filme com esse id: " + id));
+                .orElseThrow(() -> new NotFoundExceptions("Não foi encontrado nenhum filme com esse id: " + id));
 
         Map<String, String> message = new HashMap<>();
         message.put("message", "Objeto deletado");
