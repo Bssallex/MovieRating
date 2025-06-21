@@ -1,4 +1,4 @@
-# 🎬 API de Avaliação de Filmes
+# 🎬 Avaliação de Filmes
 
 API REST desenvolvida para que usuários possam criar seu próprio catálogo de filmes, avaliando-os com base em critérios personalizados como: nome, descrição, nota, gênero, crítica e experiência pessoal.
 
@@ -70,6 +70,13 @@ Autenticação com OAuth2 Google via Spring Security:
 - 🔐 Autorização baseada em token (JWT)  
 - ⚙️ Possível implementação de perfis (admin/usuário)  
 - 🔒 API voltada para uso pessoal/privado com proteção extra via Google  
+
+---
+
+## 📑 Documentação da API
+
+- Documentação automática com **Swagger / OpenAPI**  
+- Acesse via: `http://localhost:8080/swagger-ui.html`  
 
 ---
 
