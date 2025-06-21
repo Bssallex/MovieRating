@@ -1,8 +1,24 @@
 # 🎬 API de Avaliação de Filmes
 
-API REST desenvolvida para que usuários possam criar seu próprio catálogo de filmes, avaliando-os com base em critérios personalizados como nome, descrição, nota, gênero, crítica e experiência pessoal.
+API REST desenvolvida para que usuários possam criar seu próprio catálogo de filmes, avaliando-os com base em critérios personalizados como: nome, descrição, nota, gênero, crítica e experiência pessoal.
 
-Projetada para ser escalável, com base em Arquitetura Limpa, e preparada para produção com autenticação via OAuth2 (Google), documentação com Swagger/OpenAPI, versionamento com Flyway e deploy em nuvem (AWS - EC2).
+Projetada para ser escalável, com base em Arquitetura Limpa e preparada para produção com autenticação via OAuth2 (Google), documentação com Swagger/OpenAPI, versionamento com Flyway e deploy em nuvem (AWS - EC2).
+
+## 📊 Tecnologias e Ferramentas
+
+- Java 17  
+- Spring Boot  
+- Arquitetura Limpa  
+- Spring Security + OAuth2 (Google)  
+- Swagger / OpenAPI  
+- Lombok  
+- DTOs e Mapper  
+- Maven  
+- Flyway  
+- Docker + PostgreSQL  
+- AWS EC2  
+- ResponseEntity  
+- Exceções personalizadas (RuntimeException)  
 
 ---
 
@@ -18,7 +34,7 @@ Projetada para ser escalável, com base em Arquitetura Limpa, e preparada para p
 
 ---
 
-## 🧠 Regra de Negócio Principal (Entidade `Movie`)
+## 🧠 Regra de Negócio Principal (Entidade `Movies`)
 
 | Atributo         | Descrição                                  |
 |------------------|--------------------------------------------|
@@ -47,38 +63,18 @@ Projetada para ser escalável, com base em Arquitetura Limpa, e preparada para p
 
 ---
 
-## 📊 Tecnologias e Ferramentas
-
-- Java 17  
-- Spring Boot  
-- Arquitetura Limpa  
-- Spring Security + OAuth2 (Google)  
-- Swagger / OpenAPI  
-- Lombok  
-- DTOs e Mapper  
-- Maven  
-- Flyway  
-- Docker + PostgreSQL  
-- AWS EC2  
-- ResponseEntity  
-- Exceções personalizadas (RuntimeException)  
-
----
-
 ## 🔐 Segurança
 
 Autenticação com OAuth2 Google via Spring Security:
 
 - 🔐 Autorização baseada em token (JWT)  
-- ⚙️ Possível implementação futura de perfis (admin/usuário)  
+- ⚙️ Possível implementação de perfis (admin/usuário)  
 - 🔒 API voltada para uso pessoal/privado com proteção extra via Google  
 
 ---
 
 ## 📅 Melhorias Futuras
 
-- ✅ Testes automatizados (JUnit + Mockito)  
-- ✅ Melhorias no modelo de datas  
+- ✅ Testes automatizados (JUnit + Mockito)    
 - 🔄 Atualização parcial de atributos (PATCH)  
-- 🌐 Integração com Angular para front-end  
-- ⚙️ Melhoria nas regras de negócio e camadas de segurança  
+- 🌐 Integração com Angular para front-end    
